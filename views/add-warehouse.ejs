@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+        <form id="createWarehouseForm">
+            <label for="warehouse-name">Warehouse Name</label> <br>
+            <input type="text" id="warehouse-name" name="warehouse-name" required> <br> <br>
+            <input type="submit">
+        </form>
+    </body>
+    <script>
+        createWarehouseForm.onsubmit = async (e) => {
+            e.preventDefault();
+            let data = JSON.stringify({
+                    name: document.getElementById('warehouse-name').value
+
+                });
+            fetch('./create-warehouse', {
+                method: 'POST',
+                body: data,
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                }
+            });
+            window.location.href = '/';
+        }
+    </script>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+        <form id="addShelf">
+            <label for="warehouses">List of Warehouses:</label><br>
+            <select id="warehouses" required>
+                <% for(var i=0; i < data.length; i++) { %>
+                    <option value="<%= data[i].name %>"> <%= data[i].name %> </option>
+                 <% } %>
+            </select> <br> <br>
+            <label for="zones">List of Zones:</label><br>
+            <select id="zones" required>
+                <% for(var i=1; i <= 12; i++) { %>
+                    <option value="<%= i %>">Zone <%= i %></option>
+                 <% } %>
+            </select> <br> <br>
+            <label for="shelf">Shelf Name:</label><br>
+            <input type="text" id="shelf" name="shelf" required><br>
+            <input type="submit">
+        </form>
+    </body>
+    <script>
+        var data = <%- JSON.stringify(data) %>;
+        addShelf.onsubmit = async (e) => {
+            e.preventDefault();
+            let data = JSON.stringify({
+                    warehouse: document.getElementById('warehouses').value,
+                    zone: document.getElementById('zones').value,
+                    shelf: document.getElementById('shelf').value
+                });
+            console.log(data)
+            fetch('./create-shelf', {
+                method: 'POST',
+                body: data,
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                }
+            });
+            window.location.href = '/';
+        };
+    </script>
+</html>

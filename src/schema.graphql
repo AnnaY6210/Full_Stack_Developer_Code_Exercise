@@ -1,0 +1,30 @@
+type Warehouse {
+    id: ID!
+    name: String!
+}
+
+type Zone {
+    id: ID!
+    warehouseId: Warehouse!
+    name: String!
+}
+
+type Shelf {
+    id: ID!
+    zoneId: Zone!
+    name: String!
+}
+
+type Item {
+    id: ID!
+    shelfId: Shelf!
+    name: String! 
+}
+
+type Query {
+    checkWarehouses: [Warehouse!]!
+}
+
+type Mutation {
+  createWarehouse(name: String!): Warehouse!
+}
