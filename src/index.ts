@@ -47,7 +47,6 @@ router.post('/create-shelf', async (req: any, res: any) => {
     res.redirect('/create-shelf');
     return;
   }
-  console.log(body);
   let warehouse = await prisma.warehouse.findMany({
     where: {
       name: body.warehouse
@@ -60,6 +59,17 @@ router.post('/create-shelf', async (req: any, res: any) => {
         name: "Zone " + body.zone
       }
     })
+
+    check = await prisma.shelf.findMany({
+      where: {
+        zoneId: zone[0].id
+      }
+    });
+
+    if (check.length >= 10) {
+      res.redirect('create-shelf');
+      return;
+    }
 
     if (zone) {
       let newShelf = await prisma.shelf.create({
